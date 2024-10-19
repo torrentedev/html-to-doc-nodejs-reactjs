@@ -1,10 +1,11 @@
 .App {
   font-family: Arial, sans-serif;
   text-align: center;
+  padding: 20px;
 }
 
 textarea {
-  width: 80%;
+  width: 100%;
   height: 200px;
   margin: 20px 0;
   padding: 10px;
@@ -16,8 +17,36 @@ button {
   font-size: 16px;
 }
 
-button[disabled] {
+button:disabled {
   background-color: #ddd;
   color: #999;
 }
+
+.progress {
+  height: 20px;
+}
+
+.progress-bar {
+  transition: width 0.4s ease;
+}
+
+.card {
+  border-radius: 10px;
+}
+
+.card-img-top {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.card-body {
+  text-align: left;
+}
+
+
+
+
+
+
+
 

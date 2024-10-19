@@ -1,41 +1,33 @@
 const express = require('express');
-const htmlToDocx = require('html-to-docx');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const fs = require('fs');
 const path = require('path');
+const routes = require('./routes');
 
 const app = express();
 const port = 3001;
 
 app.use(cors());
-app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.json({ limit: '150mb' }));
 
-app.post('/convert', async (req, res) => {
-  try {
-    const { html } = req.body;
-    if (!html) {
-      return res.status(400).send('HTML content is required');
-    }
+// Serve static files from the "out_images" directory
+const outImagesDir = path.join(__dirname, 'out_images');
+app.use('/out_images', express.static(outImagesDir));
 
-    const docxBuffer = await htmlToDocx(html);
-
-    const filePath = path.join(__dirname, 'output.docx');
-    fs.writeFileSync(filePath, docxBuffer);
-
-    res.download(filePath, 'output.docx', (err) => {
-      if (err) {
-        console.log(err);
-      }
-      // Delete the file after sending it
-      fs.unlinkSync(filePath);
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Internal Server Error');
-  }
-});
+// Use routes
+app.use('/', routes);
 
 app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+    console.log(`Server is running on http://localhost:${port}`);
 });
+
+
+
+
+
+
+
+
+
+
+
